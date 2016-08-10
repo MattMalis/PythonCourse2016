@@ -6,20 +6,21 @@ def print_int(int):
 print_int(1)
 print_int('b')
 
+import random
+
 #Function that returns the product of random draws from a uniform distribution.
-def random_product(lower,upper):
-	random1
-	random2
-	return random1 * random2
-	
-print random_product(0,1)
+# def random_product(lower,upper):
+# 	random1
+# 	random2
+# 	return random1 * random2
+# 	
+# print random_product(0,1)
 
 #NameError: global name 'random1' is not defined
 
 #We need to define numbers random1 and random2.
 #We need to import the module random.
-
-import random
+from random import uniform
 
 def random_product(lower,upper):
 	random1=uniform(lower,upper)
@@ -32,7 +33,7 @@ print random_product(0,1)
 
 #We need to add the module name before the global name.
 
-import random
+#import random
 
 def random_product(lower,upper):
 	random1=random.uniform(lower,upper)
@@ -83,4 +84,21 @@ class human(object):
 	@classmethod
 	def class_introduce(cls):
 		return 'Here is humanity!'
+	
+	def sayHi(self, otherHuman):
+		return "Hi %s my name is %s" %(otherHuman.name, self.name)
 
+me = human("24", "male")
+print me.speak("Here's what I have to say")
+print me.introduce()
+me.sex = 'Male'
+print me.introduce()
+#me.sex = 3
+#print me.introduce()
+me.age = 100
+print me
+me.name = 'Matt'
+buddy = human(age="30", sex='male', name='bruh')
+print buddy.introduce()
+
+print me.sayHi(buddy)

@@ -25,8 +25,10 @@ class Fish(Animal):
   def swim(self):
     pass
   
-  def __str__(self):
-    return "I am a fish!"
+  def __str__(self):		## this is what gets called when you give command "print myFish"
+    return "I am a fish!"		## because other animal children classes don't have a __str__ method,
+  def talk(self):					## "print myCat"  prints "<__main__.Cat object at 0x10204e490>"
+  	return "Don't talk am fish"
       
 animals = [Cat('Foo'),
            Dog('Bar'),
