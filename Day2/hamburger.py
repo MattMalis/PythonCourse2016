@@ -35,7 +35,7 @@ class Burger():
         
 rare_burger=Burger("beef","rare",0.25,["cheese"],"bread")
 
-class VeggieBurger(Burger):
+class VeggieBurger(Burger): ## 
     def __init__(self, toppings_ordered, container):
         Burger.__init__(self,"veggie patty", "medium", 0.25, toppings_ordered, container)
 

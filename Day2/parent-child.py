@@ -3,7 +3,7 @@ class Parent():
     self.sex = sex
     self.firstname = firstname
     self.lastname = lastname
-    self.kids = []
+    self.kids = [] 
 
   def role(self):
     if self.sex == "Male":

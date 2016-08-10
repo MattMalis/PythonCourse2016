@@ -46,6 +46,7 @@ class Clock(object):
     		self.hour += int(self.minutes)/60
     		self.minutes = self.minutes%60
     	self.hour = self.hour%24
+    	return self
     	
     def __sub__(self,minutes):
     	return self.__add__(-minutes)
@@ -70,3 +71,6 @@ print "c1.__sub__(30): " , c1
 print "c2.__eq__(Clock(4,65)): " , c2.__eq__(Clock(4,65))
 print "c2.__eq__(c3): " , c2.__eq__(c3)
 print "c2.__ne__(c3): " , c2.__ne__(c3)
+
+print "c4+30: " , c4+30
+print "c4+800: ", c4+800
