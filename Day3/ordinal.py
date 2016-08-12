@@ -17,5 +17,13 @@ def make_ordinal(i):
 			suf = suffixes[digit]
 		return str(i)+suf
 
+# alternatively:
+# def ordinal(n):
+# 	try:
+# 		n = int(n)
+# 	except:
+# 		raise TypeError
+# 	
+	
 #print make_ordinal(42.35)
 #print make_ordinal("a word")
