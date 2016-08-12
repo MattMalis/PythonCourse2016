@@ -11,15 +11,15 @@ def FizzBuzz(i):
       return "Fizz"
     if i % 5 == 0:
       return "Buzz"
-    print "finally"
+    print "finally1"
   except:
     if i % 15 == 0:
       return "FizzBuzz"
   else:
     return str(i)
   finally:
-    print "finally"
+    print "finally2"
   
 
 for i in range(18):
-  print str(i) + ": " + FizzBuzz(i)
+  print str(i) + ": " + FizzBuzz(i) + '\n'

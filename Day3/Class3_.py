@@ -1,8 +1,8 @@
-raise Exception
-print "I raised an exception!"
+#raise Exception
+#print "I raised an exception!"
 
 try:
-	print b
+ 	print b
 except NameError:
 	print "oops name error"	
 except:
@@ -14,10 +14,12 @@ finally:
 for i in range(1,10):
 	if i==5:
 		print "I found five!"
-		continue
+		break #continue
 		print "Here is five!"
 	else:
 		print i
+	
+		
 else:
 	print "I went through all iterations!"
 
