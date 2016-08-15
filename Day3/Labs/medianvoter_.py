@@ -16,7 +16,10 @@ class Voter(Individual):
   def __init__(self, ideology): 
     Individual.__init__(self, ideology)
   # TODO: have a voter tell you their ideology
-
+  ### added below
+  def report_ideology(self):
+  	return self.ideology
+###
 
 class Candidate(Individual):
   def __init__(self, ideology, party): 
@@ -40,8 +43,10 @@ class Polity(object):
   def __init__(self):
     self.voters = []
     self.candidates = []
+  # TODO: have a polity print count of candidates and voters  
+  def __str__(self):
+	return "Polity with %s voters and %s candidates" %(len(self.voters), len(self.candidates))
 
-  # TODO: have a polity print count of candidates and voters
 
   def populate(self, count):
     for i in range(count):
@@ -97,6 +102,10 @@ left = Candidate(.45, "left")
 slightly_left = Candidate(.4, "slightly left")
 # TODO: initialize very left party with ideology .1
 #       and a stone dead party with ideology .01 
+## added below
+very_left = Candidate(.1, "very left")
+stone_dead = Candidate(.01, "stone dead")
+####
 
 print right, left, slightly_left
 
@@ -109,6 +118,10 @@ jefferson.nominate(right)
 jefferson.nominate(left)
 jefferson.nominate(slightly_left)
 # don't forget to nominate your new candidates! 
+## added below
+jefferson.nominate(very_left)
+jefferson.nominate(stone_dead)
+####
 
 print jefferson 
 
