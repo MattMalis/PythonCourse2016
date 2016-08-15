@@ -2,7 +2,11 @@
 #print "I raised an exception!"
 
 try:
+<<<<<<< HEAD:Day3/Class3_.py
  	print b
+=======
+    print b
+>>>>>>> carlson9/master:Day3/Class3.py
 except NameError:
 	print "oops name error"	
 except:
