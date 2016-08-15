@@ -10,10 +10,11 @@ class CustomException(Exception): # inherits from Exception
 def i_call_a_function_with_errors():
   try:
     print "Calling a function...."
-    function_with_generic_error()
+    #function_with_generic_error()
     function_with_custom_error()
-    function_with_unknown_error(1)
-    function_that_does_not_exist()
+    #"word" + 3.5
+    #function_with_unknown_error(1)
+    #function_that_does_not_exist()
     print "Tada!"
   except CustomException as inst: # `as' gives us access to the exception
     print "Custom Error Caught! Error({0})".format(inst.value)
