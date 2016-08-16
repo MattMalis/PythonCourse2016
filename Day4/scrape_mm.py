@@ -20,8 +20,8 @@ web_address='https://polisci.wustl.edu/faculty/specialization'
 web_page = urllib2.urlopen(web_address)
 
 # Parse it
-soup = BeautifulSoup(web_page.read())
-soup.prettify()
+soup = BeautifulSoup(web_page.read(), "html.parser")
+soup.prettify()## doesn't do anything
 
 # Find all cases of a certain tag
 soup.find_all('h3')

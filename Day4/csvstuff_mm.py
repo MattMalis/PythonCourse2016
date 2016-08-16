@@ -1,13 +1,13 @@
 import csv
 
 #Open a file stream and create a CSV writer object
-f = open('test.csv', 'wb')
+f = open('test.csv', 'wb') ## 'wb' = wipe in bits? it wipes the file clean
 my_writer = csv.writer(f)
 
 for i in range(1, 100):
   my_writer.writerow([i, i-1])
    
-f.flush()
+f.flush() ## file doesn't get written until the flush
 f.close()
 
 #The correct way!
