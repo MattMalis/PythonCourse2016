@@ -44,6 +44,8 @@ class CustomException(Exception):
 		return self.value
 
 
+
+
 #### FUNCTION TO FIND DISTANCES FROM A DESTINATION
 ## takes as arguments: a list of length 2, for the destination's lat/lng;
 ##		and a list of lists of length 2, for each comparison point's lat/lng
@@ -81,6 +83,21 @@ def get_clean_address(lat_lng):
 	address_messy = gmaps.reverse_geocode(lat_lng)
 	address_clean = address_messy[0]['formatted_address']
 	return address_clean
+
+#### FUNCTION FOR FINDING NEARBY PLACES
+def find_nearby(search_term, lat_lng_list): ## lat_lng is a list of length 2, [lat,lng]
+	places_all = gmaps.places(search_term, lat_lng_list)
+	places = places_all['results']
+	name_address_lat_lng_dicts = []
+	for place in places:
+		name = place['name']
+		cur_dict = {name:[]}
+		lat_lng_dict = place['geometry']['location']
+		address = place['formatted_address']
+		cur_dict[name].append(address)
+		cur_dict[name].append(lat_lng_dict)
+		name_address_lat_lng_dicts.append(cur_dict)
+	return name_address_lat_lng_dicts
 
 # TODO: write code to answer the following questions: 
 # which embassy is closest to the White House in meters? how far? 
