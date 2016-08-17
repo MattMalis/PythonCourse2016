@@ -1,4 +1,6 @@
 #Register an app: https://dev.twitter.com/
+#actually, apps.twitter.com
+#create new app
 
 #sudo pip install tweepy
 import tweepy
@@ -50,7 +52,7 @@ api.followers_ids('BetulD_')
 
 for follower_id in betuld.followers_ids():
 	user = api.get_user(follower_id)
-	print user.screen_name
+	print user.screen_name # can also say user.name
 
 #How to deal with limits
 
@@ -64,10 +66,21 @@ for page in tweepy.Cursor(api.followers_ids, 'NYTimeskrugman').pages(2):
 #Get the ids of 6000 followers
 krugmans_followers=[]
 
+
 for item in tweepy.Cursor(api.followers_ids, 'NYTimeskrugman').items(6000):
 	print item
 	krugmans_followers.append(item)
 	time.sleep(1)
+	
+trump_followers=[]
+
+for item in tweepy.Cursor(api.followers_ids, 'realdonaldtrump').items(6000):
+	try:
+		print item
+		trump_followers.append(item)
+	except:
+		pass
+		time.sleep(10)
 	
 ###If you are running code, this time.sleep will not gaurantee you don't go over the limit.
 # Exercise: write generic code that will never break (this will be very helpful for everything you do, including the homework)
