@@ -73,14 +73,32 @@ for item in tweepy.Cursor(api.followers_ids, 'NYTimeskrugman').items(6000):
 	time.sleep(1)
 	
 trump_followers=[]
+# 
+# cursor_list = []
+# while cursor_list==[]:
+# 	try:
+# 		cursor_list = tweepy.Cursor(api.followers_ids, 'realdonaldtrump').items(600000)
+# 	except:
+# 		time.sleep(100)
+# 	
 
-for item in tweepy.Cursor(api.followers_ids, 'realdonaldtrump').items(6000):
+for item in tweepy.Cursor(api.followers_ids, 'realdonaldtrump').items(600000):
 	try:
 		print item
 		trump_followers.append(item)
 	except:
-		pass
-		time.sleep(10)
+		time.sleep(100)
+### SOLUTION:
+for item in items:
+	not_finished = true
+	while not_finished:
+		try:
+			#code
+			not_finished = false
+		except:
+			time.sleep(1)
+			
+
 	
 ###If you are running code, this time.sleep will not gaurantee you don't go over the limit.
 # Exercise: write generic code that will never break (this will be very helpful for everything you do, including the homework)
