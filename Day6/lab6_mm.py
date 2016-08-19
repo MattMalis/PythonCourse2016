@@ -19,15 +19,30 @@ def gcf(a, b, divisor=0): ## just don't provide an argument for divisor and this
 #Exercise 2
 #Write a function that returns prime numbers less than 121
 def primes_less_than(n):
-	primes = []
-	for num in range(n):
-		prime = True
-		for possible_prime in range(2,(num/2+1)):
-			if (num%possible_prime == 0):
-				prime = False
-				break;
-		if prime: primes.append(num)
-	return primes
+	#primes = []
+	if n<=1:
+		return
+	if n==2:
+		print '2'
+		return
+	n_prime = True
+	for num in range(2,n/2+1):
+		if n%num==0:
+			n_prime = False
+	if n_prime: print n
+	return primes_less_than(n-1)
+	
+	
+	# for num in range(n):
+# 		prime = True
+# 		for possible_prime in range(2,(num/2+1)):
+# 			if (num%possible_prime == 0):
+# 				prime = False
+# 				break;
+# 		if prime: primes.append(num)
+# 	return primes
+
+
 
 #Exercise 3
 #Write a function that gives a solution to Tower of Hanoi game
