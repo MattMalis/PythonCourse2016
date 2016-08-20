@@ -71,32 +71,37 @@ def tower(disks, t = [[],[],[]], st=0, dest=2, first_time=True):
 	
 	if (disks==3):
 		
+				
+				
+		#t[st] = ['d3', 'd2', 'd1']
+		#t[st].append('d3')
+		#t[st].append('d2')
+		#t[st].append('d1')
+
+		#t[open] = []
+		#t[dest] = []
 # 		first move -> top from st to destination
 		print 'first'
 		print t
 
 		mover = t[st].pop()
 		stack(t[dest],mover)
-		
 # 		second move -> middle from st to open
 		print 'second'
 		print t
 		mover = t[st].pop()
 		stack(t[open],mover)
-		
 # 		third -> top from dest to open
 		print 'third'
 		print t
 		mover = t[dest].pop()
 		stack(t[open],mover)
-		
 # 		fourth -> bottom from st to destination
 		print 'fourth'
 		print t
 
 		mover = t[st].pop()
 		stack(t[dest],mover)
-		
 # 		fifth -> top from open to start
 		print 'fifth'
 		print t
@@ -117,7 +122,8 @@ def tower(disks, t = [[],[],[]], st=0, dest=2, first_time=True):
 		stack(t[dest],mover)
 		print 'final'
 		print t
-
+		#print "st_dest: " + str(st_dest)
+		#return [t, st_dest]
 		return t
 		
 # 	if disks>3:
@@ -127,6 +133,16 @@ def tower(disks, t = [[],[],[]], st=0, dest=2, first_time=True):
 # 	
 	if (disks>3):
 		
+		
+		## FOUR DISKS:
+		# three disk game, with st=0, dest=1, open=2
+		# move d4 to 2
+		# three disk game, with st=1, dest=2, open=0
+		
+		# FIVE DISKS
+		# four disk game, with st=0, dest=1, open=2
+		# move d5 to 2
+		# four disk game, with st=1, dest=2, open=0
 		if (first_time):
 			start_pile = []
 			for num in range(disks)[::-1]:
@@ -137,21 +153,65 @@ def tower(disks, t = [[],[],[]], st=0, dest=2, first_time=True):
 			begin_t = t
 		
 		print "\n\ntower at start of move, when disks = %s: " %(disks)
-		print str(begin_t) + '\n'
+		print str(begin_t) + '\n\n'
 		
+		#if (disks%2==0): next_dest = open
+		#else: next_dest = dest
+		#next_dest = disks%2
+		#if (next_dest==0): next_dest = 2
+		
+		
+		#if (disks%2==0):
 		t_1 = tower(disks-1, begin_t, st, open, False)
+		#else:
+		#	t_1 = tower(disks-1, begin_t, st, open, False)
 
 		print "\n\ntower between recursive calls, when disks = %s: " %(disks)
-		print str(t_1) + '\n'
+		print str(t_1) + '\n\n'
 		
 		base = t_1[st].pop()
+		#base_dest = 0
+		#if (next_dest==2): base_dest =1
+		#if (next_dest==1): base_dest = 2
+		#if (disks%2==0):
+		#if (first_time):
+			
+		#for i in range(0,2):
+		#	if len(t[i])==0:
+		#		base_dest=i
 		stack(t_1[dest], base)
+		#else:
+		#	stack(t_1[dest], base)
+		
+		#if (disks%2==0):
+		#	t_2 = tower(disks-1, t_1, dest, base_dest, False)
 
+		#else:
 		t_2 = tower(disks-1, t_1, open, dest, False)
 			
-		print "\ntower at at end of move, when disks = %s: " %(disks)
-		print str(t_2) + '\n'
+		print "\n\ntower at at end of move, when disks = %s: " %(disks)
+		print str(t_2) + '\n\n'
 		
 		return t_2
+		
+		#begin_t= [ [], [], [] ]
+		#begin_t[0].append('d'+str(disks))
+		#begin_t[0] = ['d'+str(disks)] + begin_t[0]
+		
+		# t_ = tower(disks-1)
+# 		print "successful first tower(disks-1) call, when disks = %s \n" %(disks)
+# 		print "tower after first tower() call: \n"
+# 		print str(t_[0])
+# 		t_[0][0] = ['d'+str(disks)] + t_[0][0]
+# 		print "t_[0] after adding new disk: %s" %(t_[0])
+# 		print "t_[1]: " + str(t_[1])
+# 		mover = t_[0][t_[1][0]].pop()
+# 		
+# 		stack(t_[0][t_[1][1]],mover)
+# 		tt = tower(disks-1, t_)[0]
+# 		print "successful second tower(disks-1) call when disks = %s \n" %(disks)
 
-tower(7)
+			
+
+tower(5)
+
