@@ -119,17 +119,6 @@ movie_tour = []
 tour(movies, movie_tour)
 
 
-def findPath(graph, start, end, path=[]):
-        path = path + [start]
-        if start == end:
-            return path
-        if not graph.has_key(start):
-            return None
-        for node in graph[start]:
-            if node not in path:
-                newpath = findPath(graph, node, end, path)
-                if newpath: return newpath
-        return None
 
 print findPath(movies, jr, ms)
 
@@ -145,9 +134,13 @@ def EulerExists(graph):
 	return True
 
 def EulerPath(graph):
+	eulers = []
 	for node in graph.keys():
 		path = EulerFromStart(graph, node)
-		if path: return path
+		if path: eulers.append(path)
+	print "len(eulers): " + str(len(eulers))
+	if (len(eulers)>0):
+		return eulers
 	print "Euler Path does not exist"
 	return None
 
@@ -155,8 +148,8 @@ def EulerFromStart(graph, start, path=[]):
 	if start in path:
 		return None
 	path = path+[start]
-	print "path: " + str(path)
 	if sorted(path)==sorted(graph.keys()):
+		print "path: " + str(path)
 		return path
 	if not graph.has_key(start):
 		print "Key '%s' not in graph" %(start)
@@ -172,7 +165,37 @@ e = EulerPath(movies, jr)
 # TODO: implement findShortestPath()
 # print findShortestPath(movies, ms, ss)
 
+def findPath(graph, start, end, path=[]):
+        path = path + [start]
+        if start == end:
+            return path
+        if not graph.has_key(start):
+            return None
+        for node in graph[start]:
+            if node not in path:
+                newpath = findPath(graph, node, end, path)
+                if newpath: return newpath
+        return None
 
+def findAllPaths(graph, start, end, cur_path=[], all_paths=[]):
+        cur_path = cur_path + [start]
+        if start == end:
+        	all_paths.append(cur_path)
+        if not graph.has_key(start):
+            return None
+        for node in graph[start]:
+            if node not in cur_path:
+                newpaths = findAllPaths(graph, node, end, cur_path, all_paths)
+              	#print "cur_path: %s \n newpath: %s" %(cur_path, newpaths)
+                if (len(newpaths)>0): 
+                	for p in newpaths:
+                		if len(p)>0:
+                			if not p in all_paths:
+		                		all_paths.append(p)
+        return all_paths
+
+
+jr_ah = findAllPaths(movies, jr, ah)
 
 # TODO: implement findAllPaths() to find all paths between two nodes
 # allPaths = findAllPaths(movies, jr, ms)
