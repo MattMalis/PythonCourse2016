@@ -31,6 +31,41 @@ print sum([len(ring[node]) for node in ring.keys()])/2
 # TODO: define a function countEdges
 
 
+def makeSquareGraph(num_nodes):
+	G = {}
+	sqrt_n = num_nodes**(.5)
+	for i in range(num_nodes):
+		if ( (i%sqrt_n)!=(sqrt_n - 1) ) :
+			makeLink(G, i, i+1)
+		if ( (i//sqrt_n)!=(sqrt_n - 1) ):
+			makeLink(G, i, i+int(sqrt_n))
+	return G
+
+sq_gr = makeSquareGraph(256)
+
+def makeRectGraph(num_row, num_col):
+	R = {}
+	for i in range(num_row * num_col):
+		if ( (i%num_col) != (num_col-1) ): # if it's not on the far right of the graph
+			makeLink(R, i, i+1)
+		if ( (i//num_col) != (num_row - 1) ): # if it's not at the bottom of the graph
+			makeLink(R, i, i+num_col)
+	return R
+
+
+def print_graph(g):
+	for key in g.keys():
+		print "node: " + str(key) + ", links: " + str(g[key])
+
+def count_edges(g):
+	sum = 0
+	for node in g.keys():
+		for i in g[node].keys():
+			sum+=1
+	return sum/2
+
+	
+
 # Social Network
 class Actor(object):
   def __init__(self, name):
