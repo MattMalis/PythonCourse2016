@@ -144,7 +144,14 @@ def EulerExists(graph):
 		return False
 	return True
 
-def EulerPath(graph, start, path=[]):
+def EulerPath(graph):
+	for node in graph.keys():
+		path = EulerFromStart(graph, node)
+		if path: return path
+	print "Euler Path does not exist"
+	return None
+
+def EulerFromStart(graph, start, path=[]):
 	if start in path:
 		return None
 	path = path+[start]
@@ -155,7 +162,7 @@ def EulerPath(graph, start, path=[]):
 		print "Key '%s' not in graph" %(start)
 		return None
 	for node in graph[start]:
-		try_this = 	EulerPath(graph, node, path)
+		try_this = 	EulerFromStart(graph, node, path)
 		if try_this: 
 			return try_this
 
