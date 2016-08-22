@@ -39,8 +39,8 @@ while(True):
 
 statuses = []
 def get_fol_statuses(status_list, fol_id_list, start_index):
-	for index in range(start_index,10):
-	#for index in range(start_index,len(fol_id_list)):
+	#for index in range(start_index,10):
+	for index in range(start_index,len(fol_id_list)):
 		try:
 			usr = api.get_user(fol_id_list[index])
 			stat_count = usr.statuses_count
@@ -60,24 +60,29 @@ fol_fol_count = []
 ## first - getting all followers' followers (will need it later)
 # 	(to solve the current problem, just need to count)
 
+
 def get_fol_fols(fol_fols, fol_fol_counts, fol_id_list, start_index):
-	for index in range(start_index,10):
-	#for index in range(start_index,len(fol_id_list)):
+	#for index in range(start_index,10):
+	for index in range(start_index,len(fol_id_list)):
 		try:
-			fol_fols.append([])
+			
 			usr = api.get_user(fol_id_list[index])
-			count = usr.follower_count()
+			count = usr.followers_count
 			fol_fol_counts.append(count)
+			fol_fols.append([])
 			if count<=1000:
-				ids = usr.follower_ids()
-				fol_fols[index] = ids
+				for page in tweepy.Cursor(api.followers_ids, usr.screen_name).pages():
+					fol_fols[index].extend(page)
+			
 		except:
 			print "Error getting follower count for follower id: %s (index #%s), sleeping and trying again" %(cfr_fol_ids[index],index)
 			time.sleep(20)
 			get_fol_fols(fol_fols, fol_fol_counts, fol_id_list, index)
-	return fol_fol_id_list
+	return [fol_fols, fol_fol_counts]
 
-cfr_fol_fol_ids = get_fol_fols(fol_fol_list, fol_fol_count, cfr_fol_ids, 0)
+cfr_combo = get_fol_fols(fol_fol_list, fol_fol_count, cfr_fol_ids, 0)
+cfr_fol_fol_ids = cfr_combo[0]
+cfr_fol_fol_counts = cfr_combo[0]
 
 ## getting friend IDs:
 
@@ -130,8 +135,10 @@ def get_fr_fols(fr_fols, fr_fol_counts, fr_id_list, start_index):
 			count = usr.friend_count()
 			fol_fol_counts.append(count)
 			if count<=1000:
-				ids = usr.follower_ids()
-				fol_fols[index] = ids
+				2for page in tweepy.Cursor(api.followers_ids, usr.screen_name).pages():
+					fol_fols[index].extend(page)
+			#	ids = usr.followers_ids()
+			#	fol_fols[index] = ids
 		except:
 			print "Error getting follower count for friend id: %s (index #%s), sleeping and trying again" %(cfr_fr_ids[index],index)
 			time.sleep(20)
@@ -161,7 +168,7 @@ c_writer.writerow(["follower ID", "follower user name", "number of statuses" "nu
 
 for i in range(len(:
 	try:
-		c_writer.writerow([p[0], p[2], p[3], p[4]])
+		#c_writer.writerow([p[0], p[2], p[3], p[4]])
 	except:
 		print "ERROR: " + p[0] + '\n'
 		pass
