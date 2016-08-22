@@ -10,7 +10,8 @@ import time
 #http://docs.tweepy.org/en/v3.2.0/
 
 #Get access to API
-auth = tweepy.OAuthHandler('your consumer key', 'your consumer secret') ##Never put these in public code! Do NOT push keys to GitHub. Keep a private file that you can simply import
+auth = tweepy.OAuthHandler('your consumer key', 'your consumer secret') ##Never put these in public code! Do NOT push keys to GitHub. 
+#Keep a private file that you can simply import
 auth.set_access_token('your access token', 'your access token secret')    
 api = tweepy.API(auth)
 
