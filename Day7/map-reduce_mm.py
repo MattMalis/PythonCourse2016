@@ -10,8 +10,13 @@ mylist=[]
 for x in items: 
 	mylist.append(sqr(x))
 	
+<<<<<<< HEAD:Day7/map-reduce_mm.py
 mylist=map(sqr, items) ## sorta like apply in R
 mylist=map((lambda x: x **2), items)
+=======
+mylist=map(sqr, items)
+mylist=map(lambda x: x **2, items)
+>>>>>>> carlson9/master:Day7/map-reduce.py
 
 funcs = [sqr, cub]
 for i in items:
