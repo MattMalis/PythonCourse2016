@@ -17,11 +17,12 @@ my_square_list=[]
 for i in range(0,10):
 	my_square_list.append(i**2)
 
-zip(my_list,my_square_list)
+zip(my_list,my_square_list) ## if different lengths - only zips up through the shorter length
 
 #.index and .count methods work the same as above
 
 my_list.reverse() #Don't forget to add the parentheses!
+## ^^ actually changes the list! (no output)
 my_list.sort() #Don't forget to add the parentheses!
 my_list.append(10)
 my_list.extend(my_square_list)
@@ -90,6 +91,7 @@ from collections import deque
 myqueue=deque(letters[0:10])
 myqueue.append('k')
 myqueue.popleft()
+## also, appendleft()
 
 ###				Tree				###
 

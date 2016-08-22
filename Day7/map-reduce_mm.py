@@ -10,7 +10,7 @@ mylist=[]
 for x in items: 
 	mylist.append(sqr(x))
 	
-mylist=map(sqr, items)
+mylist=map(sqr, items) ## sorta like apply in R
 mylist=map((lambda x: x **2), items)
 
 funcs = [sqr, cub]
@@ -21,6 +21,7 @@ for i in items:
 # reducing and filtering
 range(-5, 5)
 filter((lambda x: x < 0), range(-5,5))
+## subsetting a list, keeping element if it satisfies the condition
 
 from functools import reduce
 reduce( (lambda x, y: x * y), items )

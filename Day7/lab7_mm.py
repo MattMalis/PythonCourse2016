@@ -115,12 +115,12 @@ def tour(graph, nodes):
           break 
 
 # TODO: find an Eulerian tour of the movie network and check it 
-movie_tour = [] 
-tour(movies, movie_tour)
+#movie_tour = [] 
+#tour(movies, movie_tour)
 
 
 
-print findPath(movies, jr, ms)
+#print findPath(movies, jr, ms)
 
 def EulerExists(graph):
 	# Euler Path exists iff exactly zero or two edges have odd number of vertices
@@ -160,7 +160,6 @@ def EulerFromStart(graph, start, path=[]):
 			return try_this
 
 
-e = EulerPath(movies, jr)
 
 # TODO: implement findShortestPath()
 # print findShortestPath(movies, ms, ss)
@@ -193,9 +192,33 @@ def findAllPaths(graph, start, end, cur_path=[], all_paths=[]):
                 			if not p in all_paths:
 		                		all_paths.append(p)
         return all_paths
-
+#print "all_paths: %s" %(all_paths)
 
 jr_ah = findAllPaths(movies, jr, ah)
+
+print "jr_ah:  %s" %(jr_ah)
+print "len(jr_ah): %s" %(len(jr_ah))
+jr_dh = findAllPaths(movies, jr, dh)
+
+print "jr_dh:  %s" %(jr_dh)
+print "len(jr_dh): %s" %(len(jr_dh))
+
+
+def findShortestPath(graph, start, end):
+	all_paths = findAllPaths(graph, start, end)
+	shortest = all_paths[0]
+	for p in all_paths:
+		if len(p) < len(shortest):
+			shortest = p
+	return shortest
+
+print "findShortestPath(movies, jr, ah): " 
+
+print findShortestPath(movies, jr, ah)
+
+print "findShortestPath(movies, jr, dh): " 
+
+print findShortestPath(movies, jr, dh)
 
 # TODO: implement findAllPaths() to find all paths between two nodes
 # allPaths = findAllPaths(movies, jr, ms)
