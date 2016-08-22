@@ -24,74 +24,121 @@ cfr = api.get_user('cfr_iigg')
 #             time.sleep(1)
 
 ## MOST ACTIVE = STATUSES_COUNT (total number of statuses)
+
 cfr_fol_ids = []
-for f in cfr.followers_ids():
+
+while(True):
 	try:
-		cfr_fol_ids.append([f])
+		cfr_fol_ids = cfr.followers_ids()
+		break
 	except:
-		print "Error with follower id: %s, sleeping and trying again" %(f)
-		time.sleep(5)
+		print "Error, sleeping and trying again"
+		time.sleep(20)
 
 ## most active among followers of target
 
-cfr_fol_statuses = []
-def get_fol_statuses(status_list, start_index):
-	for index in range(start_index,len(cfr_fol_ids)):
+statuses = []
+def get_fol_statuses(status_list, fol_id_list, start_index):
+	for index in range(start_index,10):
+	#for index in range(start_index,len(fol_id_list)):
 		try:
-			usr = api.get_user(id[0])
+			usr = api.get_user(fol_id_list[index])
 			stat_count = usr.statuses_count
 			status_list.append(stat_count)
 		except:
-			print "Error getting status count for follower id: %s (index #%s), sleeping and trying again" %(cfr_fol_ids[index],index)
-			time.sleep(10)
+			print "Error getting status count for follower id: %s (index #%s), sleeping and trying again" %(fol_id_list[index],index)
+			time.sleep(20)
 			get_fol_statuses(status_list, index)
 	return status_list
 
-cfr_fol_statuses = get_fol_statuses(cfr_fol_statuses, 0)
+cfr_fol_statuses = get_fol_statuses(statuses, cfr_fol_ids, 0)
 
 ## most popular (greatest # followers) among target's followers
-cfr_fol_fol_ids = []
+fol_fol_list = []
+fol_fol_count = []
+
 ## first - getting all followers' followers (will need it later)
-# to solve this problem, just need to count
-def get_fol_fols(fol_fol_id_list, start_index):
-	for index in range(start_index,len(cfr_fol_ids)):
+# 	(to solve the current problem, just need to count)
+
+def get_fol_fols(fol_fols, fol_fol_counts, fol_id_list, start_index):
+	for index in range(start_index,10):
+	#for index in range(start_index,len(fol_id_list)):
 		try:
-			fol_fol_id_list[index] = []
-			usr = api.get_user(id[0])
-			fol_ids = usr.follower_ids()
-			fol_fol_id_list[index] = fol_ids
+			fol_fols.append([])
+			usr = api.get_user(fol_id_list[index])
+			count = usr.follower_count()
+			fol_fol_counts.append(count)
+			if count<=1000:
+				ids = usr.follower_ids()
+				fol_fols[index] = ids
 		except:
-			print "Error getting status count for follower id: %s (index #%s), sleeping and trying again" %(cfr_fol_ids[index],index)
-			time.sleep(10)
-			get_fol_fols(fol_fol_id_list, index)
+			print "Error getting follower count for follower id: %s (index #%s), sleeping and trying again" %(cfr_fol_ids[index],index)
+			time.sleep(20)
+			get_fol_fols(fol_fols, fol_fol_counts, fol_id_list, index)
 	return fol_fol_id_list
 
-cfr_fol_fol_ids = get_fol_fols(cfr_fol_fol_ids, 0)
+cfr_fol_fol_ids = get_fol_fols(fol_fol_list, fol_fol_count, cfr_fol_ids, 0)
 
-## most active layman, expert, and celebrity among target's friends
+## getting friend IDs:
 
 def: get_friend_ids():
 	try:
-		cfr_friend_ids = []
-		cfr_friend_ids = cfr.friends_ids()
-		return cfr_friend_ids
+		friend_ids = []
+		friend_ids = cfr.friends_ids()
+		return friend_ids
 	except:
 		print "error, trying again"
-		time.sleep(10)
+		time.sleep(20)
 		get_friend_ids()
 		
+cfr_friend_ids = get_friend_ids()
 
-# 
-# cfr_friend_ids = []
-# for f in cfr.followers_ids():
-# 	try:
-# 		cfr_fol_ids.append([f])
-# 	except:
-# 		print "Error with follower id: %s, sleeping and trying again" %(f)
-# 		time.sleep(5)
-# 
+
+## most active layman, expert, and celebrity among target's friends
+
+fr_statuses = []
+def get_fol_statuses(status_list, fr_id_list, start_index):
+	#for index in range(start_index,10):
+	for index in range(start_index,len(fr_id_list)):
+		try:
+			usr = api.get_user(fr_id_list[index])
+			stat_count = usr.statuses_count
+			status_list.append(stat_count)
+		except:
+			print "Error getting status count for follower id: %s (index #%s), sleeping and trying again" %(fol_id_list[index],index)
+			time.sleep(20)
+			get_fol_statuses(status_list, index)
+	return status_list
+
+cfr_fr_statuses = get_fol_statuses(fr_statuses, cfr_friend_ids, 0)
+
 
 ## most popular among friends of target
+
+fr_fol_list = []
+fr_fol_count = []
+
+## first - getting all followers' followers (will need it later)
+# 	(to solve the current problem, just need to count)
+
+def get_fr_fols(fr_fols, fr_fol_counts, fr_id_list, start_index):
+	for index in range(start_index,10):
+	#for index in range(start_index,len(fr_id_list)):
+		try:
+			fr_fols.append([])
+			usr = api.get_user(fr_id_list[index])
+			count = usr.friend_count()
+			fol_fol_counts.append(count)
+			if count<=1000:
+				ids = usr.follower_ids()
+				fol_fols[index] = ids
+		except:
+			print "Error getting follower count for friend id: %s (index #%s), sleeping and trying again" %(cfr_fr_ids[index],index)
+			time.sleep(20)
+			get_fr_fols(fol_fols, fol_fol_counts, fol_id_list, index)
+	return fol_fol_id_list
+
+cfr_fr_fol_ids = get_fr_fols(fr_fol_list, fr_fol_count, cfr_fr_ids, 0)
 
 
 
