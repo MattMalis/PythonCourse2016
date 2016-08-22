@@ -70,7 +70,6 @@ def count_edges(g):
 class Actor(object):
   def __init__(self, name):
     self.name = name 
-
   def __repr__(self):
     return self.name 
 
@@ -134,14 +133,47 @@ def findPath(graph, start, end, path=[]):
 
 print findPath(movies, jr, ms)
 
+def EulerExists(graph):
+	# Euler Path exists iff exactly zero or two edges have odd number of vertices
+	num_odd=0
+	for node in graph.keys():
+		if len(graph[node])%2:
+			num_odd+=1
+	if ( num_odd!=0 and num_odd!=2 ):
+		print "Graph has %s odd vertices; no Euler Circuit exists" %num_odd
+		return False
+	return True
+
+def EulerPath(graph, start, path=[]):
+	if start in path:
+		return None
+	path = path+[start]
+	print "path: " + str(path)
+	if sorted(path)==sorted(graph.keys()):
+		return path
+	if not graph.has_key(start):
+		print "Key '%s' not in graph" %(start)
+		return None
+	for node in graph[start]:
+		try_this = 	EulerPath(graph, node, path)
+		if try_this: 
+			return try_this
+
+
+e = EulerPath(movies, jr)
 
 # TODO: implement findShortestPath()
 # print findShortestPath(movies, ms, ss)
+
+
 
 # TODO: implement findAllPaths() to find all paths between two nodes
 # allPaths = findAllPaths(movies, jr, ms)
 # for path in allPaths:
 #   print path
+
+
+
 
 # Copyright (c) 2014 Matt Dickenson
 # 
