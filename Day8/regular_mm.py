@@ -23,9 +23,13 @@ re.findall(r'[A-Z]+.',mytext)
 re.findall(r'\d',mytext)
 re.findall(r'\d+',mytext)
 re.findall(r'\d+.',mytext)
+<<<<<<< HEAD:Day8/regular_mm.py
 re.findall(r'\d+.*',mytext) ## period is any character
 #  * is: find any (.) until you don't hit a character ('\n' is not a character)
 # dont use the asterisk
+=======
+re.findall(r'\d*',mytext)
+>>>>>>> carlson9/master:Day8/regular.py
 re.findall(r'\d+.*\w',mytext)
 re.findall(r'\d\w',mytext)
 re.findall(r'(\d+\S*)',mytext)
@@ -65,7 +69,7 @@ re.findall(r'^b\w*',mytext,re.MULTILINE)
 
 mytext = 'a1b2c3D'
 
-re.match(r'\d',mytext) #matches the pattern at the beginning of the string
+re.match(r'[a-z]',mytext) #matches the pattern at the beginning of the string
 re.search(r'\d',mytext) #looks for the pattern anywhere in the string
 
 #math and search
