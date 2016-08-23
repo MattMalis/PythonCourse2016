@@ -60,6 +60,7 @@ data[data['ev']>40]
 # TODO: what's the minimum population in 1990? 
 # in which state was that? 
 # how many states had over 35 electoral votes in 2010? 
+(data[data['yr']==2010][data['ev']>35])
 
 # we can also apply functions to columns
 format = lambda x: '%.2f' % x 
@@ -68,6 +69,7 @@ data['popm'].map(format)
 # sort on values
 data2 = data.sort_index(by='popm')
 data2.head()
+data2.head(10)
 data2.tail()
 
 # summary statistics
@@ -76,7 +78,13 @@ data.describe()
 data.std()
 
 # how much did total population change between 1990 and 2010? 
+sum1990 = sum(data['pop'][data['yr']==1990])
+sum2010 = sum(data['pop'][data['yr']==2010])
+pop_change = sum1990-sum2010
+
 # TODO: how many people did the average congressperson represent in 1990?
+sum_reps1990 = sum(data['reps'][data['yr']==1990][data['st']!="D.C."])
+pop_per_rep1990 = sum1990/sum_reps1990
 
 # we could also represent a single variable as a series with hierarchical indexing
 p = Series(data['pop'].values, index=[data['st'], data['yr']])

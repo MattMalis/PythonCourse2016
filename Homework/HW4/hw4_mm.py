@@ -6,6 +6,8 @@ import numpy
 
 def mergeSort(n, nums=[], begin=True):
 	#print "nums when n = %s: %s" %(n, nums)
+	if n==0:
+		return
 	if begin:
 		for i in range(n):
 			nums.append(random.random())
@@ -21,19 +23,19 @@ def mergeSort(n, nums=[], begin=True):
 				return [right[0], left[0]]
 			else: return [left[0], right[0]]
 		else:
-			min = nums[0]
+			mini = nums[0]
 			for i in nums:
-				if i<min:
-					min = i
-			max = min
+				if i<mini:
+					mini = i
+			maxi = mini
 			for i in nums:
-				if i>max:
-					max = i
+				if i>maxi:
+					maxi = i
 			middle = nums[0]
 			for i in nums:
-				if i!=min and i!=max:
+				if i!=mini and i!=maxi:
 					middle = i
-			return [min, middle, max]
+			return [mini, middle, maxi]
 	left_head = 0
 	right_head = 0
 	copy = []
@@ -55,6 +57,8 @@ def mergeSort(n, nums=[], begin=True):
 	
 	
 def bubbleSort(n, nums=[], end_sorted = 0, begin = True):
+	if n==0:
+		return
 	if begin:
 		for i in range(n):
 			nums.append(random.random())
@@ -77,7 +81,7 @@ def bubbleSort(n, nums=[], end_sorted = 0, begin = True):
 	
 	
 	
-huns = map(lambda x: 10*x, range(10))
+huns = map(lambda x: 100*x, range(1,10))
 
 bub_results = []
 merge_results = []
@@ -86,7 +90,7 @@ def merge_trials(n, trials):
 	n_trials = []
 	for i in range(trials):
 		start = time.time()
-		mergeSort(n)
+		mergeSort(n,[],True)
 		end = time.time()
 		elapsed = end-start
 		n_trials.append(elapsed)
@@ -94,7 +98,7 @@ def merge_trials(n, trials):
 		
 for n in huns:
 	time.sleep(1)
-	result = merge_trials(n, 10)
+	result = merge_trials(n, 1)
 	merge_results.append(result)
 
 
@@ -102,15 +106,16 @@ def bub_trials(n, trials):
 	n_trials = []
 	for i in range(trials):
 		start = time.time()
-		bubbleSort(n)
+		bubbleSort(n,[],0,True)
 		end = time.time()
 		elapsed = end-start
 		n_trials.append(elapsed)
 	return numpy.mean(n_trials)
+	
 		
 for n in huns:
 	time.sleep(1)
-	result = bub_trials(n, 10)
+	result = bub_trials(n, 1)
 	bub_results.append(result)
 
 # for n in huns:
@@ -125,15 +130,27 @@ for n in huns:
 # 	#avg = numpy.mean(n_trials)
 # 	merge_results.append(elapsed)
 
-f, axarr = plt.subplots(2, sharex=True, sharey=True)
-f.suptitle('Bubble Sort (top) and Merge Sort (bottom)')
-axarr[0].plot(huns, bub_results)
-axarr[1].plot(huns, merge_results)
-# Bring subplots close to each other.
-f.subplots_adjust(hspace=0)
-# Hide x labels and tick labels for all but bottom plot.
-for ax in axarr:
-    ax.label_outer()
 
-f.show()
 
+
+
+plt.plot(huns, bub_results, label = "Bubble Sort")
+plt.plot(huns, merge_results, label = "Merge Sort")
+plt.xlabel('input size')
+plt.ylabel('run time')
+plt.legend(loc = 'upper left')
+plt.show()
+
+# 
+# f, axarr = plt.subplots(2, sharex=True, sharey=True)
+# f.suptitle('Bubble Sort (top) and Merge Sort (bottom)')
+# axarr[0].plot(huns, bub_results)
+# axarr[1].plot(huns, merge_results)
+# # Bring subplots close to each other.
+# f.subplots_adjust(hspace=0)
+# # Hide x labels and tick labels for all but bottom plot.
+# for ax in axarr:
+#     ax.label_outer()
+# 
+# f.show()
+# 
