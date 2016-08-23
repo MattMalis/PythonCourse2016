@@ -77,34 +77,53 @@ def bubbleSort(n, nums=[], end_sorted = 0, begin = True):
 	
 	
 	
-huns = map(lambda x: 10*x, range(5,10))
+huns = map(lambda x: 10*x, range(10))
 
 bub_results = []
 merge_results = []
 
-for n in huns:
-	time.sleep(1)
+def merge_trials(n, trials):
 	n_trials = []
-	for i in range(5):
-		start = time.time()
-		bubbleSort(n)
-		end = time.time()
-		elapsed = end-start
-		n_trials.append(elapsed)
-	avg = numpy.mean(n_trials)
-	bub_results.append(avg)
-
-for n in huns:
-	time.sleep(1)
-	n_trials = []
-	for i in range(5):
+	for i in range(trials):
 		start = time.time()
 		mergeSort(n)
 		end = time.time()
 		elapsed = end-start
 		n_trials.append(elapsed)
-	avg = numpy.mean(n_trials)
-	merge_results.append(avg)
+	return numpy.mean(n_trials)
+		
+for n in huns:
+	time.sleep(1)
+	result = merge_trials(n, 10)
+	merge_results.append(result)
+
+
+def bub_trials(n, trials):
+	n_trials = []
+	for i in range(trials):
+		start = time.time()
+		bubbleSort(n)
+		end = time.time()
+		elapsed = end-start
+		n_trials.append(elapsed)
+	return numpy.mean(n_trials)
+		
+for n in huns:
+	time.sleep(1)
+	result = bub_trials(n, 10)
+	bub_results.append(result)
+
+# for n in huns:
+# 	time.sleep(1)
+# 	n_trials = []
+# 	#for i in range(5):
+# 	start = time.time()
+# 	mergeSort(n)
+# 	end = time.time()
+# 	elapsed = end-start
+# 		#n_trials.append(elapsed)
+# 	#avg = numpy.mean(n_trials)
+# 	merge_results.append(elapsed)
 
 f, axarr = plt.subplots(2, sharex=True, sharey=True)
 f.suptitle('Bubble Sort (top) and Merge Sort (bottom)')

@@ -38,6 +38,8 @@ def gender_features2(name):
   features["lastletter"] = name[-1].lower()
   for letter in 'abcdefghijklmnopqrstuvwxyz':
       features["count(%s)" % letter] = name.lower().count(letter)
+      ## looks at, eg, count(m)=2 as a single feature, count(m)=3 as another feature
+      ## 	(not looking at number of m's as a continuous feature)
       features["has(%s)" % letter] = (letter in name.lower())
   return features
 
@@ -65,7 +67,6 @@ for (name, tag) in devtest_names:
   guess = classifier.classify(gender_features(name))
   if guess != tag:
     errors.append( (tag, guess, name) )
-
     for (tag, guess, name) in sorted(errors):
       print 'correct=%-8s guess=%-8s name=%-30s' % (tag, guess, name)
 
@@ -82,7 +83,8 @@ print nltk.classify.accuracy(classifier, devtest_set)
 # Now lets look at some bigger documents
 from nltk.corpus import movie_reviews
 nltk.download('movie_reviews')
-documents = [(list(movie_reviews.words(fileid)), category)
+documents = [(list(movie_reviews.words(fileid)), category) # category is pos or neg
+# (all the docs are tuples - pos/neg, with list of words)
               for category in movie_reviews.categories()
               for fileid in movie_reviews.fileids(category)]
 random.shuffle(documents)

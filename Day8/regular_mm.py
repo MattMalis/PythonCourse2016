@@ -7,8 +7,8 @@ text = file.readlines()
 file.close()
 
 
-
-
+## rubular.com?
+## py regex
 
 mytext=''.join(text)
 
@@ -18,12 +18,14 @@ re.split(r'\d\.',mytext)
 re.findall(r'[a-z]',mytext)
 re.findall(r'[a-z]+',mytext)
 re.findall(r'[A-Z]',mytext)
-re.findall(r'[A-Z]+',mytext)
+re.findall(r'[A-Z]+',mytext) # with the plus, keeps LA together. without, splits up LA
 re.findall(r'[A-Z]+.',mytext)
 re.findall(r'\d',mytext)
 re.findall(r'\d+',mytext)
 re.findall(r'\d+.',mytext)
-re.findall(r'\d+.*',mytext)
+re.findall(r'\d+.*',mytext) ## period is any character
+#  * is: find any (.) until you don't hit a character ('\n' is not a character)
+# dont use the asterisk
 re.findall(r'\d+.*\w',mytext)
 re.findall(r'\d\w',mytext)
 re.findall(r'(\d+\S*)',mytext)
@@ -52,7 +54,8 @@ mytext='bin\nban\ncan'
 
 pattern = re.compile(r'^b\w*')
 pattern.findall(mytext)
-
+## without re.MULTILINE: only returns 'bin'
+## with: returns 'bin' 'ban'
 pattern = re.compile(r'^b\w*',re.MULTILINE)
 pattern.findall(mytext)
 
@@ -82,7 +85,7 @@ pattern.search(mytext,1,6) #looks for the pattern between positions 1 and 5
 
 mytext = '12 twelve'
 
-pattern = re.compile(r'(\d*)\s(\w*)')
+pattern = re.compile(r'(\d*)\s(\w*)')# looks for digits, then whitespace, then characters
 mysearch=pattern.search(mytext)
 mysearch.groups() #list of all groups
 mysearch.group(0) #the complete match
