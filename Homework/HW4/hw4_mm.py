@@ -12,7 +12,7 @@ def mergeSort(n, nums=[], begin=True):
 	mid = n//2
 	left = nums[:mid]
 	right = nums[mid:]
-	if mid>1:
+	if n>2:
 		left = mergeSort(len(left), left, False)
 		right = mergeSort(len(right), right, False)
 	else:
@@ -77,14 +77,15 @@ def bubbleSort(n, nums=[], end_sorted = 0, begin = True):
 	
 	
 	
-huns = map(lambda x: 10*x, range(10))
+huns = map(lambda x: 10*x, range(5,10))
 
 bub_results = []
 merge_results = []
 
 for n in huns:
+	time.sleep(1)
 	n_trials = []
-	for i in range(10):
+	for i in range(5):
 		start = time.time()
 		bubbleSort(n)
 		end = time.time()
@@ -94,8 +95,9 @@ for n in huns:
 	bub_results.append(avg)
 
 for n in huns:
+	time.sleep(1)
 	n_trials = []
-	for i in range(10):
+	for i in range(5):
 		start = time.time()
 		mergeSort(n)
 		end = time.time()
@@ -105,7 +107,7 @@ for n in huns:
 	merge_results.append(avg)
 
 f, axarr = plt.subplots(2, sharex=True, sharey=True)
-f.suptitle('Sharing both axes')
+f.suptitle('Bubble Sort (top) and Merge Sort (bottom)')
 axarr[0].plot(huns, bub_results)
 axarr[1].plot(huns, merge_results)
 # Bring subplots close to each other.

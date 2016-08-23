@@ -48,7 +48,7 @@ def get_fol_statuses(status_list, fol_id_list, start_index):
 		except:
 			print "Error getting status count for follower id: %s (index #%s), sleeping and trying again" %(fol_id_list[index],index)
 			time.sleep(20)
-			get_fol_statuses(status_list, index)
+			get_fol_statuses(status_list,  fol_id_list, index)
 	return status_list
 
 cfr_fol_statuses = get_fol_statuses(statuses, cfr_fol_ids, 0)
@@ -61,24 +61,23 @@ fol_fol_count = []
 # 	(to solve the current problem, just need to count)
 
 
-def get_fol_fols(fol_fols, fol_fol_counts, fol_id_list, start_index):
+def get_fol_fols(output_id_list, output_count_list, reference_id_list, start_index):
 	#for index in range(start_index,10):
-	for index in range(start_index,len(fol_id_list)):
+	for index in range(start_index,len(reference_id_list)):
 		try:
-			
-			usr = api.get_user(fol_id_list[index])
+			usr = api.get_user(reference_id_list[index])
 			count = usr.followers_count
-			fol_fol_counts.append(count)
-			fol_fols.append([])
+			output_count_list.append(count)
+			output_id_list.append([])
 			if count<=1000:
 				for page in tweepy.Cursor(api.followers_ids, usr.screen_name).pages():
-					fol_fols[index].extend(page)
+					output_id_list[index].extend(page)
 			
 		except:
 			print "Error getting follower count for follower id: %s (index #%s), sleeping and trying again" %(cfr_fol_ids[index],index)
 			time.sleep(20)
-			get_fol_fols(fol_fols, fol_fol_counts, fol_id_list, index)
-	return [fol_fols, fol_fol_counts]
+			get_fol_fols(output_id_list, output_count_list, reference_id_list, index)
+	return [output_id_list, output_count_list]
 
 cfr_combo = get_fol_fols(fol_fol_list, fol_fol_count, cfr_fol_ids, 0)
 cfr_fol_fol_ids = cfr_combo[0]
@@ -101,7 +100,7 @@ cfr_friend_ids = get_friend_ids()
 
 ## most active layman, expert, and celebrity among target's friends
 
-fr_statuses = []
+cfr_statuses = []
 def get_fol_statuses(status_list, fr_id_list, start_index):
 	#for index in range(start_index,10):
 	for index in range(start_index,len(fr_id_list)):
@@ -112,7 +111,7 @@ def get_fol_statuses(status_list, fr_id_list, start_index):
 		except:
 			print "Error getting status count for follower id: %s (index #%s), sleeping and trying again" %(fol_id_list[index],index)
 			time.sleep(20)
-			get_fol_statuses(status_list, index)
+			get_fol_statuses(status_list, fr_id_list, index)
 	return status_list
 
 cfr_fr_statuses = get_fol_statuses(fr_statuses, cfr_friend_ids, 0)
@@ -123,27 +122,25 @@ cfr_fr_statuses = get_fol_statuses(fr_statuses, cfr_friend_ids, 0)
 fr_fol_list = []
 fr_fol_count = []
 
-## first - getting all followers' followers (will need it later)
+## first - getting all friends' followers (will need it later)
 # 	(to solve the current problem, just need to count)
 
-def get_fr_fols(fr_fols, fr_fol_counts, fr_id_list, start_index):
-	for index in range(start_index,10):
-	#for index in range(start_index,len(fr_id_list)):
+def get_fr_fols(output_id_list, output_count_list, reference_id_list, start_index):
+	#for index in range(start_index,10):
+	for index in range(start_index,len(fr_id_list)):
 		try:
-			fr_fols.append([])
-			usr = api.get_user(fr_id_list[index])
+			output_id_list.append([])
+			usr = api.get_user(reference_id_list[index])
 			count = usr.friend_count()
-			fol_fol_counts.append(count)
+			output_count_list.append(count)
 			if count<=1000:
-				2for page in tweepy.Cursor(api.followers_ids, usr.screen_name).pages():
-					fol_fols[index].extend(page)
-			#	ids = usr.followers_ids()
-			#	fol_fols[index] = ids
+				for page in tweepy.Cursor(api.followers_ids, usr.screen_name).pages():
+					output_id_list[index].extend(page)
 		except:
 			print "Error getting follower count for friend id: %s (index #%s), sleeping and trying again" %(cfr_fr_ids[index],index)
 			time.sleep(20)
-			get_fr_fols(fol_fols, fol_fol_counts, fol_id_list, index)
-	return fol_fol_id_list
+			get_fr_fols(output_id_list, output_count_list, reference_id_list, index)
+	return [output_id_list, output_count_list]
 
 cfr_fr_fol_ids = get_fr_fols(fr_fol_list, fr_fol_count, cfr_fr_ids, 0)
 
@@ -164,11 +161,11 @@ cfr_fr_fol_ids = get_fr_fols(fr_fol_list, fr_fol_count, cfr_fr_ids, 0)
 
 c = open('cfr_twitter.csv','wb')
 c_writer = csv.writer(c)
-c_writer.writerow(["follower ID", "follower user name", "number of statuses" "number of followers"])
+c_writer.writerow(["follower ID", "number of statuses" "number of followers"])
 
-for i in range(len(:
+for i in range(len(cfr_fol_ids))
 	try:
-		#c_writer.writerow([p[0], p[2], p[3], p[4]])
+		c_writer.writerow(cfr_fol_ids[i], cfr_fol_statuses[i], cfr_fol_fol_counts[i])
 	except:
 		print "ERROR: " + p[0] + '\n'
 		pass
