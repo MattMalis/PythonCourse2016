@@ -27,68 +27,56 @@ from sqlalchemy.orm import relationship, backref, sessionmaker
 print sqlalchemy.__version__
 
 #Connect to the local database, can use :memory: to just try it out in memory
-engine = sqlalchemy.create_engine('sqlite:////home/david/PythonCourse2016/Day9/books.db', echo=True)
+engine = sqlalchemy.create_engine('sqlite:////Users/iramalis/Desktop/gitstuff/PythonCourse2016/Day9/books.db', echo=True)
 
 Base = declarative_base() 
 
 #Define some schemas
 class Book(Base):
   __tablename__ = 'books'
-#   __table_args__ = {'extend_existing': True}
-  
+  __table_args__ = {'extend_existing': True}
   id = Column(Integer, primary_key=True)
   name = Column(String)
   main_character = Column(String)
   year = Column(Integer)
-  
   author_id = Column(Integer, ForeignKey('authors.id'))
-  
   def __init__(self, name, main_character=None, year=None):
     self.name = name
     self.main_character = main_character
     self.year = year
-    
   def __repr__(self):
   	if self.author: return "<Book(%s by %s)>" % (self.name, self.author.name)
 	return "<Book(%s)>" %(self.name)
 
 class Author(Base):
   __tablename__ = 'authors'
-#   __table_args__ = {'extend_existing': True}
-
+  __table_args__ = {'extend_existing': True}
   id = Column(Integer, primary_key=True)
+  ## ALWAYS USE ID
   name = Column(String)
   books = relationship('Book', backref='author')
-  
   country_id = Column(Integer, ForeignKey('countries.id'))
-  
   def __init__(self, name):
     self.name = name
-  
   def __repr__(self):
     return "<Author('%s')>" % (self.name)
 
 class Country(Base):
   __tablename__ = 'countries'
-#   __table_args__ = {'extend_existing': True}
-  
+  __table_args__ = {'extend_existing': True}
   id = Column(Integer, primary_key=True)
   name = Column(String)
   capital = Column(String)
-  
   authors = relationship('Author', backref='country')
-    
   def __init__(self, name, capital=None):
     self.name = name
     self.capital = capital
-  
   def __repr__(self):
     return "<Country('%s')>" % (self.name)
 
 # First time create tables
     
 Base.metadata.create_all(engine) 
-
 
 book1=Book('war and peace')
 author1=Author('tolstoy')
@@ -135,6 +123,7 @@ session.add(book2)
 book3=Book('tale of two cities')
 session.add(book3)
 
+## note: at this point, there is only one Author - so it will just loop through that same author
 for book, author in session.query(Book, Author):
   print book.name, author.name
  

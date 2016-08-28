@@ -11,26 +11,22 @@ from sqlalchemy.orm import relationship, backref, sessionmaker
 print sqlalchemy.__version__
 
 #Connect to the local database, can use :memory: to just try it out in memory by leaving URL empty
-engine = sqlalchemy.create_engine('sqlite:////home/david/PythonCourse2016/Day9/players.db', echo=True)
+engine = sqlalchemy.create_engine('sqlite:////Users/iramalis/Desktop/gitstuff/PythonCourse2016/Day9/books.db', echo=True)
 
 Base = declarative_base() 
 
 #Define some schemas
 class Player(Base):
   __tablename__ = 'players'
-  
   #Have an ID column because player attributes (name, etc) are not unique
   id = Column(Integer, primary_key=True)
   name = Column(String)
   number = Column(Integer)
-  
   team_id = Column(Integer, ForeignKey("teams.id"))
-  
   def __init__(self, name, number, team=None):
     self.name = name
     self.number = number
-    self.team = team
-    
+    self.team = team 
   def __repr__(self):
     return "<Player('%s', '%s')>" % (self.name, self.number)
 

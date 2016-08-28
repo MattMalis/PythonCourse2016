@@ -13,6 +13,9 @@ class ListNode():
 	def __ne__ (self, other):
 		return self.value!=other.value or self.next!=other.next
 
+## addNode, addNodeAfter, addNodeBefore, removeNode, removeNodesByValue, and reverse 
+## 		all take linear time (where n is the length of the list)
+## 	can't be done any faster unless the list has a tail or is doubly-linked
 class LinkedList():
 	def __init__(self, head):
 		self.head = head
@@ -30,6 +33,9 @@ class LinkedList():
 			cur = cur.next
 		cur.next = new_node
 	def addNodeAfter(self, new_value, after_node):
+		## note: because of __eq__ override above, value for after_node
+		## 		only needs to include its own value and next's value 
+		##		(next.next can be None)
 		new_node = ListNode(new_value)
 		cur = self.head
 		while cur!=after_node  and cur.next is not None:
@@ -37,6 +43,7 @@ class LinkedList():
 		new_node.next = cur.next
 		cur.next = new_node
 	def addNodeBefore(self, new_value, before_node):
+		## see note in addNodeAfter
 		new_node = ListNode(new_value)
 		cur = self.head
 		while cur.next!=before_node and cur.next is not None:
@@ -44,8 +51,9 @@ class LinkedList():
 		new_node.next = cur.next
 		cur.next = new_node
 	def removeNode(self, node_to_remove):
+		## see note in addNodeAfter
 		cur = self.head
-		while cur.next!=node_to_remove: # and cur.next is not None:
+		while cur.next!=node_to_remove:
 			if cur.next is None:
 				print "node_to_remove not found"
 				return
@@ -62,13 +70,14 @@ class LinkedList():
 			else:
 				cur = cur.next
 	def reverse(self):
-		end = self.head
-		old_head = self.head
-		while end.next is not None:
-			end = end.next
-		self.head = end
-		### FIX ME
-		
+		reversed = None
+		cur = self.head
+		while cur is not None:
+			nxt = cur.next
+			cur.next = reversed
+			reversed = cur
+			cur = nxt
+		head.head = reversed
 	def __str__(self):
 		cur = self.head
 		while cur is not None:
@@ -82,6 +91,9 @@ class LinkedList():
 			cur = cur.next
 		return str(nodes)
 		
+
+
+	
 	
 ll = LinkedList(ListNode(10))
 ll.addNode(20)
