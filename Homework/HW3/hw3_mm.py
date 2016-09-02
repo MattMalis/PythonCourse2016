@@ -2,8 +2,8 @@ import tweepy
 import time
 import csv
 
-auth = tweepy.OAuthHandler('jAzSxPFvOq2GIuXvNMNjJoB9e', 'GnOSfYMzQbrtfuY3lvxdJuqRFqBneRh6AghRIOea5EOVCvzoMf') 
-auth.set_access_token('612416835-wEMoMN1R49XDZl8FuCNqI6Y3jdHPDChhqZOkJ9Ut', 'jmR7Udd0HhLPJE8wrrIBis1XzLKgZhZrKqqDY1Xgpnlab')    
+auth = tweepy.OAuthHandler()###
+auth.set_access_token()###    
 api = tweepy.API(auth)
 
 cfr = api.get_user('cfr_iigg')
